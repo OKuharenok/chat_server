@@ -1,0 +1,17 @@
+version: "3.3"
+services:
+  api:
+    build: .
+    links:
+      - mysql:db
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:latest
+    volumes:
+      - ./mysql_init/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=golang
